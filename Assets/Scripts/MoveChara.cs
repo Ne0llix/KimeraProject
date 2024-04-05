@@ -158,4 +158,8 @@ public class MoveChara : MonoBehaviour
         noMove = false;
     }
 
+    void Attack()
+    {
+
+    }
 }
