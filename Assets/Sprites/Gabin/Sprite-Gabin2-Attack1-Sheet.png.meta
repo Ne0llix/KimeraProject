@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a8fb8c4d3328ff64c9a4d72f8f6ebe1a
+guid: 62b33df1bbadda94180f378f838c33d1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -114,6 +114,69 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c50f1395d36b99149880fbdb58679b31
+      internalID: 947696833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite-Gabin2-Attack1-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80d2bb5e2b361594fa9202f856e38759
+      internalID: -2092682116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite-Gabin2-Attack1-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5279353f3714e784ca220bd8d8965d06
+      internalID: 2144033539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite-Gabin2-Attack1-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 128
         height: 128
@@ -124,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 00d9170129b4c7947bb505b47c9c667f
-      internalID: 1794009214
+      spriteID: 6a3cc1e8a2ea6c04c9c24a7a5beaa40d
+      internalID: -486791043
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sprite-Gabin2-Attack1-Sheet_1
+      name: Sprite-Gabin2-Attack1-Sheet_4
       rect:
         serializedVersion: 2
         x: 128
@@ -145,8 +208,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17c5a3df23d25444a98c4a229a79b329
-      internalID: 1335926316
+      spriteID: 780c5f8a7c41c264bb3492ebcf72e1b6
+      internalID: 500753431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sprite-Gabin2-Attack1-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d20e4a4a1fabce84dada36d19b9bb6ba
+      internalID: -327216952
       vertices: []
       indices: 
       edges: []
@@ -154,7 +238,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a89f8d04cceb5ac4daacfa4a73a19e8c
+    spriteID: 7d409f4e77f37b2438fdfe1be8446e1d
     internalID: 0
     vertices: []
     indices: 
@@ -162,8 +246,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Sprite-Gabin2-Attack1-Sheet_0: 1794009214
-      Sprite-Gabin2-Attack1-Sheet_1: 1335926316
+      Sprite-Gabin2-Attack1-Sheet_0: 947696833
+      Sprite-Gabin2-Attack1-Sheet_1: -2092682116
+      Sprite-Gabin2-Attack1-Sheet_2: 2144033539
+      Sprite-Gabin2-Attack1-Sheet_3: -486791043
+      Sprite-Gabin2-Attack1-Sheet_4: 500753431
+      Sprite-Gabin2-Attack1-Sheet_5: -327216952
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

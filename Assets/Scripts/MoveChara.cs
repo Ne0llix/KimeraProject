@@ -24,7 +24,7 @@ public class MoveChara : MonoBehaviour
     [SerializeField] bool canDash = true;
     [SerializeField] bool isDashing;
     [SerializeField] float dashSpeed = 15f;
-    [SerializeField] float dashingTime = 0.3f;
+    [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float animDashTime = 0.4f;
     [SerializeField] float dashingCooldown = 0.7f;
     [SerializeField] float tm;
@@ -121,6 +121,7 @@ public class MoveChara : MonoBehaviour
         else if (canJump = false || Input.GetKeyUp(KeyCode.Space))
         {
             canJump = false;
+            transSpeed = 3f;
             playerAnimator.SetBool("BoolJump", false);
         }
     }
@@ -158,8 +159,4 @@ public class MoveChara : MonoBehaviour
         noMove = false;
     }
 
-    void Attack()
-    {
-
-    }
 }
