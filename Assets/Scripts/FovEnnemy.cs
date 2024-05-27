@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FlyingRat : MonoBehaviour
+public class FovEnnemy : MonoBehaviour
 {
     [SerializeField] public float fov;
     [Range(0, 360)] public float fovAngle; //in degrees
@@ -21,7 +21,7 @@ public class FlyingRat : MonoBehaviour
 
         if (targetsInFOV.CompareTag("Player"))
         {
-            float signedAngle = -Vector3.Angle(
+            float signedAngle = Vector3.Angle(
                 -transform.right,
                 targetsInFOV.transform.position - transform.position);
             if (Mathf.Abs(signedAngle) < fovAngle / 2)
