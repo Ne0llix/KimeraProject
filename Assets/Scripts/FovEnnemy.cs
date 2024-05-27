@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class FovEnnemy : MonoBehaviour
 {
-    [SerializeField] public float fov;
-    [Range(0, 360)] public float fovAngle; //in degrees
-    public bool alert;
+    [SerializeField] public bool alert;
+    [SerializeField] Animator EnnemyAnimator;
 
     private void Awake()
     {
@@ -16,19 +15,28 @@ public class FovEnnemy : MonoBehaviour
 
     private void Update()
     {
-        bool playerInFOV = false;
-        Collider2D targetsInFOV = Physics2D.OverlapCircle(transform.position, fov);
-
-        if (targetsInFOV.CompareTag("Player"))
+        if (alert == true)
         {
-            float signedAngle = Vector3.Angle(
-                -transform.right,
-                targetsInFOV.transform.position - transform.position);
-            if (Mathf.Abs(signedAngle) < fovAngle / 2)
-            {
-                playerInFOV = true;
-                alert = true;
-            }
+            EnnemyAnimator.SetBool("BoolRun", true);
+        } else if (alert == false)
+        {
+            EnnemyAnimator.SetBool("BoolRun", false);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            alert = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            alert = false;
         }
     }
 }
