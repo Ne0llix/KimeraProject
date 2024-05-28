@@ -21,12 +21,14 @@ public class MoveChara : MonoBehaviour
 
     [SerializeField] bool canJump = true;
     [SerializeField] bool isJumping;
+
     [SerializeField] bool canDash = true;
     [SerializeField] bool isDashing;
     [SerializeField] float dashSpeed = 15f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float animDashTime = 0.4f;
     [SerializeField] float dashingCooldown = 0.7f;
+
     [SerializeField] float tm;
 
     [SerializeField] bool noMove = false;
@@ -78,14 +80,14 @@ public class MoveChara : MonoBehaviour
 
     void SpecialMove()
     {
-        /*if (Input.GetKeyDown(KeyCode.Keypad1) && noMove == false)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && noMove == false)
         {
             playerAnimator.SetBool("BoolAttack", true);
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad1))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             playerAnimator.SetBool("BoolAttack", false);
-        }*/
+        }
         if (Input.GetKeyDown(KeyCode.Space) && canJump == true && noMove == false)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
@@ -149,6 +151,7 @@ public class MoveChara : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
+
     public void StopMoving()
     {
         noMove = true;
