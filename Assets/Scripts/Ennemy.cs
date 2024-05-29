@@ -27,6 +27,11 @@ public class Ennemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Movement();
+    }
+
+    void Movement()
+    {
         Vector3 dir = target.position - transform.position;
 
         if (fovE.alert == true){

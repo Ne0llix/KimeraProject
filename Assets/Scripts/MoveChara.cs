@@ -36,6 +36,7 @@ public class MoveChara : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        damages.noMove = false;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -51,12 +52,12 @@ public class MoveChara : MonoBehaviour
     //This is a fonction to put all the translations and rotations of the cube
     void Movement()
     {
-        if (isDashing)
+        if (isDashing || damages.noMove)
         {
             return;
         }
 
-        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && damages.noMove == false) //Here, we ask if the Right Arrow key is push, if it is true, then, the cube go up on X axis for 0.05 per frame
+        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))) //Here, we ask if the Right Arrow key is push, if it is true, then, the cube go up on X axis for 0.05 per frame
         {
             transform.Translate(transSpeed * Time.deltaTime, 0, 0);
             playerAnimator.SetBool("BoolRun", true);
@@ -66,7 +67,7 @@ public class MoveChara : MonoBehaviour
         {
             playerAnimator.SetBool("BoolRun", false);
         }
-        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && damages.noMove == false) //Here, we ask if the Left Arrow key is push, if it is true, then, the cube go down on X axis for 0.05 per frame
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))) //Here, we ask if the Left Arrow key is push, if it is true, then, the cube go down on X axis for 0.05 per frame
         {
             transform.Translate(-transSpeed * Time.deltaTime, 0, 0);
             playerAnimator.SetBool("BoolRun", true);
@@ -84,11 +85,11 @@ public class MoveChara : MonoBehaviour
         {
             playerAnimator.SetTrigger("TriggerAttack");
         }
-        if (Input.GetKeyDown(KeyCode.Space) && canJump == true && damages.noMove == false)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump == true)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && canJump && damages.noMove == false)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && canJump)
         {
             StartCoroutine(Dash());
             playerAnimator.SetBool("BoolDash", true);

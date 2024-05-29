@@ -20,14 +20,15 @@ public class Damages : MonoBehaviour
     [SerializeField] float animDamageTime = 0.4f;
     [SerializeField] float damageCooldown = 0.7f;
 
-    [SerializeField] float animDeathTime = 0.4f;
+    [SerializeField] float animDeathTime = 1.2f;
 
     [SerializeField] float tm;
-    
-    [SerializeField] public bool NoMove = false;
+
+    [SerializeField] public bool noMove;
 
     void Awake()
     {
+        noMove = false;
         isDamage = false;
         PV = 4;
     }
@@ -67,13 +68,13 @@ public class Damages : MonoBehaviour
         {
             rb.velocity = Vector2.right;
         }
-        yield return new WaitForSeconds(animDamageTime);
-        rb.gravityScale = originalGravity;
-        isDamage = false;
-        yield return new WaitForSeconds(damageCooldown);
-        canBeDamage = true;
         if (PV <= 0)
         {
+            yield return new WaitForSeconds(animDamageTime);
+            rb.gravityScale = originalGravity;
+            isDamage = false;
+            yield return new WaitForSeconds(damageCooldown);
+            canBeDamage = true;
             canBeDamage = false;
             isDamage = true;
             tm = Time.time;
@@ -81,7 +82,15 @@ public class Damages : MonoBehaviour
             yield return new WaitForSeconds(animDeathTime);
             StartCoroutine(loadScene());
         }
-        RePlayMove();
+        else if (PV > 0)
+        {
+            yield return new WaitForSeconds(animDamageTime);
+            rb.gravityScale = originalGravity;
+            isDamage = false;
+            RePlayMove();
+            yield return new WaitForSeconds(damageCooldown);
+            canBeDamage = true;
+        } 
     }
 
     public IEnumerator loadScene()

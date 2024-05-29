@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22eee519a5716d24f9c4fe09c6b439bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damages: {fileID: 159643228}
   transSpeed: 5
   jumpForce: 5
   playerAnimator: {fileID: 159643225}
@@ -332,7 +333,6 @@ MonoBehaviour:
   animDashTime: 0.4
   dashingCooldown: 0.5
   tm: 0
-  noMove: 0
 --- !u!70 &159643223
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
