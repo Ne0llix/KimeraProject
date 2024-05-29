@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class MoveChara : MonoBehaviour
 {
+    [SerializeField] Damages damages;
+
     [SerializeField] float transSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] Animator playerAnimator;
@@ -30,8 +32,6 @@ public class MoveChara : MonoBehaviour
     [SerializeField] float dashingCooldown = 0.7f;
 
     [SerializeField] float tm;
-
-    [SerializeField] bool noMove = false;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +56,7 @@ public class MoveChara : MonoBehaviour
             return;
         }
 
-        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && noMove == false) //Here, we ask if the Right Arrow key is push, if it is true, then, the cube go up on X axis for 0.05 per frame
+        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && damages.noMove == false) //Here, we ask if the Right Arrow key is push, if it is true, then, the cube go up on X axis for 0.05 per frame
         {
             transform.Translate(transSpeed * Time.deltaTime, 0, 0);
             playerAnimator.SetBool("BoolRun", true);
@@ -66,7 +66,7 @@ public class MoveChara : MonoBehaviour
         {
             playerAnimator.SetBool("BoolRun", false);
         }
-        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && noMove == false) //Here, we ask if the Left Arrow key is push, if it is true, then, the cube go down on X axis for 0.05 per frame
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && damages.noMove == false) //Here, we ask if the Left Arrow key is push, if it is true, then, the cube go down on X axis for 0.05 per frame
         {
             transform.Translate(-transSpeed * Time.deltaTime, 0, 0);
             playerAnimator.SetBool("BoolRun", true);
@@ -80,24 +80,20 @@ public class MoveChara : MonoBehaviour
 
     void SpecialMove()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && noMove == false)
+        if (Input.GetKeyDown(KeyCode.Q) && damages.noMove == false)
         {
-            playerAnimator.SetBool("BoolAttack", true);
+            playerAnimator.SetTrigger("TriggerAttack");
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            playerAnimator.SetBool("BoolAttack", false);
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && canJump == true && noMove == false)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump == true && damages.noMove == false)
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
-        if (Input.GetKeyDown(KeyCode.Keypad2) && canDash && canJump && noMove == false)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && canJump && damages.noMove == false)
         {
             StartCoroutine(Dash());
             playerAnimator.SetBool("BoolDash", true);
         }
-        else if (Input.GetKeyUp(KeyCode.Keypad2))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             playerAnimator.SetBool("BoolDash", false);
         }
@@ -151,15 +147,4 @@ public class MoveChara : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
-
-    public void StopMoving()
-    {
-        noMove = true;
-    }
-
-    public void RePlayMove()
-    {
-        noMove = false;
-    }
-
 }

@@ -16,18 +16,19 @@ public class Damages : MonoBehaviour
     [SerializeField] int PV;
     [SerializeField] int dam = 0;
     [SerializeField] bool canBeDamage = true;
-    [SerializeField] bool isDamage;
+    [SerializeField] public bool isDamage;
     [SerializeField] float animDamageTime = 0.4f;
     [SerializeField] float damageCooldown = 0.7f;
 
     [SerializeField] float animDeathTime = 0.4f;
 
     [SerializeField] float tm;
-
-    [SerializeField] bool noMove = false;
+    
+    [SerializeField] public bool NoMove = false;
 
     void Awake()
     {
+        isDamage = false;
         PV = 4;
     }
 
@@ -38,24 +39,17 @@ public class Damages : MonoBehaviour
         Damage();
     }
 
-    void OnTriggerEnter(Collider collision)
-    {
-        if (collision.CompareTag("Ennemy"))
-        {
-            StartCoroutine(Damage());
-        }
-    }
-
     void DamageControl()
     {
-        if (Input.GetKeyDown(KeyCode.Keypad1) && canBeDamage && noMove == false)
+        if (Input.GetKeyDown(KeyCode.Keypad1) && canBeDamage)
         {
             StartCoroutine(Damage());
         }
     }
 
-    IEnumerator Damage()
+    public IEnumerator Damage()
     {
+        StopMoving();
         canBeDamage = false;
         isDamage = true;
         tm = Time.time;
@@ -87,6 +81,7 @@ public class Damages : MonoBehaviour
             yield return new WaitForSeconds(animDeathTime);
             StartCoroutine(loadScene());
         }
+        RePlayMove();
     }
 
     public IEnumerator loadScene()
@@ -94,5 +89,15 @@ public class Damages : MonoBehaviour
         fadeAnimator.SetTrigger("FadeIn");
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneName);
+    }
+
+        public void StopMoving()
+    {
+        noMove = true;
+    }
+
+    public void RePlayMove()
+    {
+        noMove = false;
     }
 }
