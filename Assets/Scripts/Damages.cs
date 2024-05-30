@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,10 @@ public class Damages : MonoBehaviour
     [SerializeField] Animator fadeAnimator;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] public bool isLCol = false;
+    [SerializeField] bool isDead = false;
     [SerializeField] private Rigidbody2D rb;
+
+    [SerializeField] FallingZone FZ;
 
     public string sceneName;
     [SerializeField] int PV;
@@ -38,6 +42,10 @@ public class Damages : MonoBehaviour
     void Update()
     {
         DamageControl();
+        if (isDead == true)
+        {
+            return;
+        }
     }
 
     void DamageControl()
@@ -67,6 +75,7 @@ public class Damages : MonoBehaviour
     public IEnumerator Damage()
     {
         StopMoving();
+        playerAnimator.SetBool("BoolRun", false);
         canBeDamage = false;
         isDamage = true;
         tm = Time.time;
@@ -98,20 +107,9 @@ public class Damages : MonoBehaviour
                 rb.velocity = Vector2.left;
             }
         }
-            if (PV == 0)
+            if (PV <= 0)
         {
-            canBeDamage = false;
-            dam = 0;
-            yield return new WaitForSeconds(animDamageTime);
-            rb.gravityScale = originalGravity;
-            isDamage = false;
-            yield return new WaitForSeconds(damageCooldown);
-            tm = Time.time;
-            playerAnimator.SetTrigger("TriggerDeath");
-            yield return new WaitForSeconds(animDeathTime);
-            StartCoroutine(loadScene());
-            yield return new WaitForSeconds(0.35f);
-            damageAnimator.SetInteger("IntDamage", dam);
+            StartCoroutine(Death());
         }
         else if (PV > 0)
         {
@@ -131,7 +129,7 @@ public class Damages : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-        public void StopMoving()
+    public void StopMoving()
     {
         noMove = true;
     }
@@ -139,5 +137,30 @@ public class Damages : MonoBehaviour
     public void RePlayMove()
     {
         noMove = false;
+    }
+
+    public IEnumerator Death()
+    {
+        float originalGravity = rb.gravityScale;
+        canBeDamage = false;
+        dam = 0;
+        yield return new WaitForSeconds(animDamageTime);
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = originalGravity;
+        isDamage = false;
+        yield return new WaitForSeconds(damageCooldown);
+        playerAnimator.SetTrigger("TriggerDeath");
+        yield return new WaitForSeconds(animDeathTime);
+        isDead = true;
+        StartCoroutine(loadScene());
+        yield return new WaitForSeconds(0.35f);
+        damageAnimator.SetInteger("IntDamage", dam);
+    }
+
+    private IEnumerator replacePlayer(Collider2D collision)
+    {
+        fadeAnimator.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(1f);
+        collision.transform.position = FZ.playerSpawn.position;
     }
 }

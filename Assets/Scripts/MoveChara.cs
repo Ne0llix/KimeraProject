@@ -33,6 +33,8 @@ public class MoveChara : MonoBehaviour
 
     [SerializeField] float tm;
 
+    [SerializeField] public bool isMenuOpen = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +54,17 @@ public class MoveChara : MonoBehaviour
     //This is a fonction to put all the translations and rotations of the cube
     void Movement()
     {
-        if (isDashing || damages.noMove)
+        if (Input.GetKeyDown(KeyCode.Escape) && isMenuOpen == false)
+        {
+            MenuManager.instance.Menu();
+            isMenuOpen = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isMenuOpen == true)
+        {
+            MenuManager.instance.EndMenu();
+            isMenuOpen = false;
+        }
+            if (isDashing || damages.noMove)
         {
             return;
         }

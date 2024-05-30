@@ -225,7 +225,6 @@ MonoBehaviour:
   damageAnimator: {fileID: 0}
   fadeAnimator: {fileID: 0}
   spriteRenderer: {fileID: 2834900473976692737}
-  LCol: {fileID: 7378371919352472361}
   isLCol: 0
   rb: {fileID: 3425212904130905765}
   sceneName: SCN_TUTO
@@ -356,9 +355,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1299369848362062389}
   - component: {fileID: 7378371919352472361}
+  - component: {fileID: 7939190542421368866}
   m_Layer: 6
   m_Name: LCol
-  m_TagString: LCol
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,3 +423,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5001221, y: 1.8284984}
   m_EdgeRadius: 0
+--- !u!114 &7939190542421368866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671595046547082093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bc63289681e6cc4a94902a63bd0b23c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damages: {fileID: 3830712477706642806}

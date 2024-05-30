@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class FallingZone : MonoBehaviour
 {
 
-    private Transform playerSpawn;
+    [SerializeField] public Transform playerSpawn;
     private Animator fadeAnimator;
     [SerializeField] Checkpoint point;
 
@@ -22,7 +22,7 @@ public class FallingZone : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
