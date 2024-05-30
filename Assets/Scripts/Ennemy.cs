@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,15 +81,26 @@ public class Ennemy : MonoBehaviour
         {
             Damages damages = collision.transform.GetComponent<Damages>();
             damages.TakeDamage(damageOnCollision);
-            if (spriteEnnemy.flipX == false)
-            {
-                rb.velocity = Vector2.right;
-            }
-            else if (spriteEnnemy.flipX == true)
-            {
-                rb.velocity = Vector2.left;
-            }
+            StartCoroutine(FeedbackCollision());
             EnnemyAnimator.SetBool("BoolRun", false);
+        }
+    }
+
+    public IEnumerator FeedbackCollision()
+    {
+        if (spriteEnnemy.flipX == false)
+        {
+            speed = 0;
+            rb.velocity = Vector2.right * speedRun*2;
+            yield return new WaitForSeconds(wait);
+            speed = speedRun;
+        }
+        else if (spriteEnnemy.flipX == true)
+        {
+            speed = 0;
+            rb.velocity = Vector2.left * speedRun*2;
+            yield return new WaitForSeconds(wait);
+            speed = speedRun;
         }
     }
 }

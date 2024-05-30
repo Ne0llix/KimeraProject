@@ -7,6 +7,7 @@ TagManager:
   - Ennemy
   - PlayerSpawn
   - FadeSystem
+  - LCol
   layers:
   - Default
   - TransparentFX

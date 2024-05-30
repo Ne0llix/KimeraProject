@@ -25,12 +25,12 @@ public class FovEnnemy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            StartCoroutine(waiting());
+            StartCoroutine(Waiting());
             alert = false;
         }
     }
 
-        public IEnumerator waiting()
+        public IEnumerator Waiting()
     {
         ennemy.isWaiting = true;
         yield return new WaitForSeconds(ennemy.wait);

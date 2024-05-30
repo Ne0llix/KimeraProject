@@ -10,6 +10,7 @@ public class Damages : MonoBehaviour
     [SerializeField] Animator damageAnimator;
     [SerializeField] Animator fadeAnimator;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] public bool isLCol = false;
     [SerializeField] private Rigidbody2D rb;
 
     public string sceneName;
@@ -37,7 +38,6 @@ public class Damages : MonoBehaviour
     void Update()
     {
         DamageControl();
-        Damage();
     }
 
     void DamageControl()
@@ -56,9 +56,12 @@ public class Damages : MonoBehaviour
 
     public void TakeDamage(int PVLess)
     {
-        PV -= PVLess;
-        dam += PVLess;
-        StartCoroutine(Damage());
+        if(canBeDamage == true)
+        {
+            PV -= PVLess;
+            dam += PVLess;
+            StartCoroutine(Damage());
+        }
     }
 
     public IEnumerator Damage()
@@ -71,16 +74,33 @@ public class Damages : MonoBehaviour
         rb.gravityScale = 0f;
         playerAnimator.SetTrigger("TriggerDamage");
         damageAnimator.SetInteger("IntDamage", dam);
-        if (spriteRenderer.flipX == true)
+        if (isLCol == true)
         {
-            rb.velocity = Vector2.left;
+            if (spriteRenderer.flipX == true)
+            {
+                spriteRenderer.flipX = false;
+                rb.velocity = Vector2.right;
+            }
+            else if (spriteRenderer.flipX == false)
+            {
+                rb.velocity = Vector2.right;
+            }
         }
-        else
+        else if (isLCol == false)
         {
-            rb.velocity = Vector2.right;
+            if (spriteRenderer.flipX == true)
+            {
+                rb.velocity = Vector2.left;
+            }
+            else if (spriteRenderer.flipX == false)
+            {
+                spriteRenderer.flipX = true;
+                rb.velocity = Vector2.left;
+            }
         }
-        if (PV == 0)
+            if (PV == 0)
         {
+            canBeDamage = false;
             dam = 0;
             yield return new WaitForSeconds(animDamageTime);
             rb.gravityScale = originalGravity;
