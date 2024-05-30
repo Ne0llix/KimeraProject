@@ -44,8 +44,21 @@ public class Damages : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Keypad1) && canBeDamage)
         {
-            StartCoroutine(Damage());
+            TakeDamage(1);
         }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            PV += 1;
+            dam -= 1;
+            damageAnimator.SetInteger("IntDamage", dam);
+        }
+    }
+
+    public void TakeDamage(int PVLess)
+    {
+        PV -= PVLess;
+        dam += PVLess;
+        StartCoroutine(Damage());
     }
 
     public IEnumerator Damage()
@@ -57,8 +70,6 @@ public class Damages : MonoBehaviour
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         playerAnimator.SetTrigger("TriggerDamage");
-        PV -= 1;
-        dam += 1;
         damageAnimator.SetInteger("IntDamage", dam);
         if (spriteRenderer.flipX == true)
         {
@@ -68,19 +79,19 @@ public class Damages : MonoBehaviour
         {
             rb.velocity = Vector2.right;
         }
-        if (PV <= 0)
+        if (PV == 0)
         {
+            dam = 0;
             yield return new WaitForSeconds(animDamageTime);
             rb.gravityScale = originalGravity;
             isDamage = false;
             yield return new WaitForSeconds(damageCooldown);
-            canBeDamage = true;
-            canBeDamage = false;
-            isDamage = true;
             tm = Time.time;
             playerAnimator.SetTrigger("TriggerDeath");
             yield return new WaitForSeconds(animDeathTime);
             StartCoroutine(loadScene());
+            yield return new WaitForSeconds(0.35f);
+            damageAnimator.SetInteger("IntDamage", dam);
         }
         else if (PV > 0)
         {

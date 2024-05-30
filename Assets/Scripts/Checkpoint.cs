@@ -9,13 +9,16 @@ public class Checkpoint : MonoBehaviour
 
     void Awake()
     {
-        checkpoint = GameObject.FindGameObjectWithTag("Player").transform;
+        checkpoint = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
         checkpointActive = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        checkpoint.position = transform.position;
-        checkpointActive = true;
+        if (collision.CompareTag("Player"))
+        {
+            checkpoint.position = transform.position;
+            checkpointActive = true;
+        }
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class FovEnnemy : MonoBehaviour
 {
     [SerializeField] public bool alert;
+    [SerializeField] Ennemy ennemy;
 
     private void Awake()
     {
@@ -24,7 +25,15 @@ public class FovEnnemy : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            StartCoroutine(waiting());
             alert = false;
         }
+    }
+
+        public IEnumerator waiting()
+    {
+        ennemy.isWaiting = true;
+        yield return new WaitForSeconds(ennemy.wait);
+        ennemy.isWaiting = false;
     }
 }
