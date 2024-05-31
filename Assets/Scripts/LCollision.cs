@@ -9,7 +9,6 @@ public class LCollision : MonoBehaviour
     {
         if (Lcollision.CompareTag("LCol"))
         {
-            Debug.Log("GAUCHE");
             damages.isLCol = true;
         }
     }

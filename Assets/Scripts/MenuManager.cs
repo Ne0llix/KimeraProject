@@ -38,7 +38,7 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    public void QuitButton()
+    public void MainMenuButton()
     {
 
     }

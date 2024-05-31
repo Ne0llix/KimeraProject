@@ -103,7 +103,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4fc65c121e6c6f94cb5ced8f408b0836, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -200,7 +200,6 @@ MonoBehaviour:
   targetPosition: {x: 0, y: 0}
   groundCheckRadius: 0.25
   canJump: 1
-  isJumping: 0
   canDash: 1
   isDashing: 0
   dashSpeed: 12
@@ -208,6 +207,7 @@ MonoBehaviour:
   animDashTime: 0.4
   dashingCooldown: 0.5
   tm: 0
+  isMenuOpen: 0
 --- !u!114 &3830712477706642806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,13 +220,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0bc7539bb98b84c966c1e7073b4e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transSpeed: 5
   playerAnimator: {fileID: 248543187007900851}
   damageAnimator: {fileID: 0}
   fadeAnimator: {fileID: 0}
   spriteRenderer: {fileID: 2834900473976692737}
   isLCol: 0
+  isDead: 0
   rb: {fileID: 3425212904130905765}
+  FZ: {fileID: 0}
   sceneName: SCN_TUTO
   PV: 0
   dam: 0

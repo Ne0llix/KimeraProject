@@ -6,6 +6,9 @@ using UnityEngine;
 public class Ennemy : MonoBehaviour
 {
     [SerializeField] FovEnnemy fovE;
+    [SerializeField] Damages damages;
+
+    [SerializeField] Damages playerDeath;
     [SerializeField] Animator EnnemyAnimator;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] public float wait;
@@ -19,7 +22,7 @@ public class Ennemy : MonoBehaviour
 
     public SpriteRenderer spriteEnnemy;
     private Transform target;
-    private int destPoint = 0;
+    public int destPoint = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +38,10 @@ public class Ennemy : MonoBehaviour
 
     void Movement()
     {
+        if (damages.tpEnnemy == true)
+        {
+            StartCoroutine(tpWaiting());
+        }
         if (isWaiting == true)
         {
             speed = 0;
@@ -102,5 +109,13 @@ public class Ennemy : MonoBehaviour
             yield return new WaitForSeconds(wait);
             speed = speedRun;
         }
+    }
+
+    public IEnumerator tpWaiting()
+    {
+        fovE.alert = false;
+        transform.position = target.position;
+        yield return new WaitForSeconds(wait);
+        damages.tpEnnemy = false;
     }
 }

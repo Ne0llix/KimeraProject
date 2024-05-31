@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    private Transform checkpoint;
-    [SerializeField] bool checkpointActive;
+    public Transform checkpoint;
 
     void Awake()
     {
         checkpoint = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
-        checkpointActive = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +16,6 @@ public class Checkpoint : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             checkpoint.position = transform.position;
-            checkpointActive = true;
         }
     }
 }

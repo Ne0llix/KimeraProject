@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class Damages : MonoBehaviour
 {
-    [SerializeField] float transSpeed = 5f;
+    [SerializeField] GameObject player;
+
+    [SerializeField] public bool tpEnnemy;
+
     [SerializeField] Animator playerAnimator;
     [SerializeField] Animator damageAnimator;
     [SerializeField] Animator fadeAnimator;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] public bool isLCol = false;
-    [SerializeField] bool isDead = false;
+    [SerializeField] public bool isDead = false;
     [SerializeField] private Rigidbody2D rb;
 
     [SerializeField] FallingZone FZ;
@@ -33,6 +36,7 @@ public class Damages : MonoBehaviour
 
     void Awake()
     {
+        tpEnnemy = false;
         noMove = false;
         isDamage = false;
         PV = 4;
@@ -109,7 +113,9 @@ public class Damages : MonoBehaviour
         }
             if (PV <= 0)
         {
+            rb.gravityScale = originalGravity;
             StartCoroutine(Death());
+            MenuManager.instance.EndMenu();
         }
         else if (PV > 0)
         {
@@ -120,13 +126,6 @@ public class Damages : MonoBehaviour
             yield return new WaitForSeconds(damageCooldown);
             canBeDamage = true;
         } 
-    }
-
-    public IEnumerator loadScene()
-    {
-        fadeAnimator.SetTrigger("FadeIn");
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(sceneName);
     }
 
     public void StopMoving()
@@ -141,26 +140,35 @@ public class Damages : MonoBehaviour
 
     public IEnumerator Death()
     {
-        float originalGravity = rb.gravityScale;
         canBeDamage = false;
         dam = 0;
         yield return new WaitForSeconds(animDamageTime);
         rb.velocity = Vector2.zero;
-        rb.gravityScale = originalGravity;
         isDamage = false;
         yield return new WaitForSeconds(damageCooldown);
         playerAnimator.SetTrigger("TriggerDeath");
         yield return new WaitForSeconds(animDeathTime);
         isDead = true;
-        StartCoroutine(loadScene());
+        StartCoroutine(replacePlayer());
         yield return new WaitForSeconds(0.35f);
+        tpEnnemy = false;
         damageAnimator.SetInteger("IntDamage", dam);
     }
 
-    private IEnumerator replacePlayer(Collider2D collision)
+    private IEnumerator replacePlayer()
     {
         fadeAnimator.SetTrigger("FadeIn");
         yield return new WaitForSeconds(1f);
-        collision.transform.position = FZ.playerSpawn.position;
+        tpEnnemy = true;
+        isDead = false;
+        playerAnimator.SetTrigger("Respawn");
+        RePlayMove();
+        canBeDamage = true;
+        PV = 4;
+        if (spriteRenderer.flipX == false)
+        {
+            spriteRenderer.flipX = true;
+        }
+        transform.position = FZ.playerSpawn.position;
     }
 }

@@ -22,7 +22,6 @@ public class MoveChara : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.25f;
 
     [SerializeField] bool canJump = true;
-    [SerializeField] bool isJumping;
 
     [SerializeField] bool canDash = true;
     [SerializeField] bool isDashing;
@@ -118,13 +117,11 @@ public class MoveChara : MonoBehaviour
         if (IsGrounded)
         {
             canJump = true;
-            isJumping = false;
             transSpeed = 5f;
             playerAnimator.SetBool("BoolJump", false);
         }
         else if (canJump && Input.GetKey(KeyCode.Space))
         {
-            isJumping = true;
             canJump = false;
             transSpeed = 3f;
             playerAnimator.SetBool("BoolJump", true);
@@ -139,6 +136,7 @@ public class MoveChara : MonoBehaviour
 
     IEnumerator Dash()
     {
+        playerAnimator.SetBool("BoolRun", false);
         canDash = false;
         isDashing = true;
         tm = Time.time;
