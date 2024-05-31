@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class Damages : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-
     [SerializeField] public bool tpEnnemy;
 
     [SerializeField] Animator playerAnimator;
@@ -20,7 +18,6 @@ public class Damages : MonoBehaviour
 
     [SerializeField] FallingZone FZ;
 
-    public string sceneName;
     [SerializeField] int PV;
     [SerializeField] int dam = 0;
     [SerializeField] bool canBeDamage = true;

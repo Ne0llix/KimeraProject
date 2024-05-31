@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class MenuManager : MonoBehaviour
 
     public void ResumeButton()
     {
-
+        menuUI.SetActive(false);
     }
 
     public void OptionsButton() 
@@ -40,6 +41,7 @@ public class MenuManager : MonoBehaviour
 
     public void MainMenuButton()
     {
-
+        menuUI.SetActive(false);
+        SceneManager.LoadScene("SCN_TUTO");
     }
 }

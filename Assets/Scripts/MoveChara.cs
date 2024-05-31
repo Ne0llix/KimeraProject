@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEditor.Tilemaps;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MoveChara : MonoBehaviour
 {
     [SerializeField] Damages damages;
+    [SerializeField] Ennemy ennemy;
 
     [SerializeField] float transSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
@@ -22,6 +23,7 @@ public class MoveChara : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.25f;
 
     [SerializeField] bool canJump = true;
+    [SerializeField] bool isJumping = true;
 
     [SerializeField] bool canDash = true;
     [SerializeField] bool isDashing;
@@ -29,6 +31,19 @@ public class MoveChara : MonoBehaviour
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float animDashTime = 0.4f;
     [SerializeField] float dashingCooldown = 0.7f;
+
+    [SerializeField] bool isAttacking;
+    [SerializeField] public bool isEnnemyTouch;
+    [SerializeField] bool isCombo;
+    [SerializeField] bool canAttack = true;
+    [SerializeField] float attackSpeed = 7f;
+    [SerializeField] float attack1Time = 0.7f;
+    [SerializeField] float attack2Time = 0.3f;
+    [SerializeField] float animAttackTime = 0.1f;
+    [SerializeField] float animJumpAttackTime = 0.3f;
+    [SerializeField] float attackCooldown = 0.1f;
+
+    public GameObject attack;
 
     [SerializeField] float tm;
 
@@ -63,7 +78,8 @@ public class MoveChara : MonoBehaviour
             MenuManager.instance.EndMenu();
             isMenuOpen = false;
         }
-            if (isDashing || damages.noMove)
+
+        if (isDashing || damages.noMove || isAttacking)
         {
             return;
         }
@@ -88,18 +104,48 @@ public class MoveChara : MonoBehaviour
         {
             playerAnimator.SetBool("BoolRun", false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Space) && canJump == true)
+        {
+            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            isJumping = true;
+        }
     }
 
     void SpecialMove()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && damages.noMove == false)
+        if (Input.GetKey(KeyCode.Q) && damages.noMove == false && canAttack && isJumping == false && !isAttacking)
+        {
+            isAttacking = true;
+            playerAnimator.SetBool("BoolAttack", true);
+            playerAnimator.SetTrigger("TriggerAttack");
+            StartCoroutine(Attack1());
+        }
+        if (Input.GetKey(KeyCode.Q) && damages.noMove == false && canAttack && isEnnemyTouch && isAttacking)
+        {
+            isCombo = true;
+            playerAnimator.SetTrigger("TriggerAttack");
+            StartCoroutine(Attack2());
+        }
+        if (Input.GetKey(KeyCode.Q) && damages.noMove == false && canAttack && isEnnemyTouch && isCombo && isAttacking)
         {
             playerAnimator.SetTrigger("TriggerAttack");
+            StartCoroutine(Attack3());
         }
-        if (Input.GetKeyDown(KeyCode.Space) && canJump == true)
+        if (Input.GetKey(KeyCode.Q) && damages.noMove == false && canAttack && canJump == false)
         {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+            isAttacking = true;
+            playerAnimator.SetBool("BoolAttack", true);
+            playerAnimator.SetTrigger("TriggerAttack");
+            StartCoroutine(JumpAttack());
+            playerAnimator.SetBool("BoolAttack", false);
         }
+
+        if (isAttacking && isEnnemyTouch)
+        {
+            ennemy.PV -= 1;
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && canJump)
         {
             StartCoroutine(Dash());
@@ -109,6 +155,17 @@ public class MoveChara : MonoBehaviour
         {
             playerAnimator.SetBool("BoolDash", false);
         }
+
+
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (isAttacking && collision.transform.CompareTag("Ennemy"))
+        {
+            StartCoroutine(ennemy.FeedbackCollision());
+            ennemy.PV -= 1;
+        }
     }
 
     void Jump()
@@ -116,18 +173,21 @@ public class MoveChara : MonoBehaviour
         bool IsGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         if (IsGrounded)
         {
+            isJumping = false;
             canJump = true;
             transSpeed = 5f;
             playerAnimator.SetBool("BoolJump", false);
         }
         else if (canJump && Input.GetKey(KeyCode.Space))
         {
+            isJumping = true;
             canJump = false;
             transSpeed = 3f;
             playerAnimator.SetBool("BoolJump", true);
         }
         else if (canJump = false || Input.GetKeyUp(KeyCode.Space))
         {
+            isJumping = true;
             canJump = false;
             transSpeed = 3f;
             playerAnimator.SetBool("BoolJump", false);
@@ -157,5 +217,75 @@ public class MoveChara : MonoBehaviour
         rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
+    }
+
+    IEnumerator Attack1()
+    {
+        playerAnimator.SetBool("BoolRun", false);
+        canAttack = false;
+        tm = Time.time;
+        yield return new WaitForSeconds(animAttackTime);
+        rb.gravityScale = 0f;
+        if (spriteRenderer.flipX == true)
+        {
+            rb.velocity = Vector2.right * attackSpeed;
+        }
+        else
+        {
+            rb.velocity = Vector2.left * attackSpeed;
+        }
+        canAttack = true;
+        yield return new WaitForSeconds(attack1Time);
+        rb.gravityScale = 1f;
+        isAttacking = false;
+        rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
+        playerAnimator.SetBool("BoolAttack", false);
+    }
+
+    IEnumerator Attack2()
+    {
+        isEnnemyTouch = false;
+        playerAnimator.SetBool("BoolRun", false);
+        canAttack = false;
+        isCombo = true;
+        tm = Time.time;
+        rb.gravityScale = 0f;
+        canAttack = true;
+        yield return new WaitForSeconds(attack2Time);
+        rb.gravityScale = 1f;
+        isAttacking = false;
+        isCombo = false;
+        playerAnimator.SetBool("BoolAttack", false);
+    }
+
+    IEnumerator Attack3()
+    {
+        isEnnemyTouch = false;
+        playerAnimator.SetBool("BoolRun", false);
+        canAttack = false;
+        isCombo = true;
+        tm = Time.time;
+        rb.gravityScale = 0f;
+        yield return new WaitForSeconds(attack2Time);
+        rb.gravityScale = 1f;
+        yield return new WaitForSeconds(attackCooldown);
+        isAttacking = false;
+        isCombo = false;
+        canAttack = true;
+    }
+
+    IEnumerator JumpAttack()
+    {
+        playerAnimator.SetBool("BoolRun", false);
+        canAttack = false;
+        tm = Time.time;
+        yield return new WaitForSeconds(animJumpAttackTime);
+        rb.gravityScale = 0f;
+        yield return new WaitForSeconds(attack2Time);
+        rb.gravityScale = 1f;
+        rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
+        yield return new WaitForSeconds(attackCooldown);
+        isAttacking = false;
+        canAttack = true;
     }
 }

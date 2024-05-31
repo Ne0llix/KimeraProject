@@ -24,6 +24,9 @@ public class Ennemy : MonoBehaviour
     private Transform target;
     public int destPoint = 0;
 
+    public int PV;
+    public GameObject objectToDestroy;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +37,7 @@ public class Ennemy : MonoBehaviour
     void Update()
     {
         Movement();
+        health();
     }
 
     void Movement()
@@ -80,6 +84,15 @@ public class Ennemy : MonoBehaviour
                 spriteEnnemy.flipX = false;
                 EnnemyAnimator.SetBool("BoolRun", false);
             }
+        }
+    }
+
+    private void health()
+    {
+        if (PV <= 0)
+        {
+            StartCoroutine(FeedbackCollision());
+            Destroy(objectToDestroy);
         }
     }
 
