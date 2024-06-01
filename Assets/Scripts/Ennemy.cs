@@ -14,6 +14,8 @@ public class Ennemy : MonoBehaviour
     [SerializeField] public float wait;
     [SerializeField] public bool isWaiting;
 
+    [SerializeField] public float animDeathime;
+
     public float speedRun;
     public float speed = 0;
     public Transform[] waypoint;
@@ -23,9 +25,6 @@ public class Ennemy : MonoBehaviour
     public SpriteRenderer spriteEnnemy;
     private Transform target;
     public int destPoint = 0;
-
-    public int PV;
-    public GameObject objectToDestroy;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +36,6 @@ public class Ennemy : MonoBehaviour
     void Update()
     {
         Movement();
-        health();
     }
 
     void Movement()
@@ -87,16 +85,7 @@ public class Ennemy : MonoBehaviour
         }
     }
 
-    private void health()
-    {
-        if (PV <= 0)
-        {
-            StartCoroutine(FeedbackCollision());
-            Destroy(objectToDestroy);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision){
+private void OnCollisionEnter2D(Collision2D collision){
         if (collision.transform.CompareTag("Player"))
         {
             Damages damages = collision.transform.GetComponent<Damages>();

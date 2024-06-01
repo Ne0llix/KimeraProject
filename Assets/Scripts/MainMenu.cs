@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject menuUI;
-    public GameObject player;
-    public GameObject canvas;
+    public GameObject fade;
+    public GameObject settingWindow;
+    public GameObject quitButtonSettingWindow;
+
     public static MainMenu instance;
 
     public void Awake()
@@ -18,24 +19,11 @@ public class MainMenu : MonoBehaviour
             return;
         }
         instance = this;
-        Screen.SetResolution(1920, 1080, true);
-    }
-
-    public void mainMenu()
-    {
-        menuUI.SetActive(true);
-    }
-
-    public void EndmainMenu()
-    {
-        menuUI.SetActive(false);
     }
 
     public void StartButton()
     {
         SceneManager.LoadScene("SCN_TUTO");
-        player.SetActive(true);
-        canvas.SetActive(true);
     }
 
     public void QuitButton()
@@ -43,8 +31,13 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void OptionsButton()
+    public void SettingButton()
     {
+        settingWindow.SetActive(true);
+    }
 
+    public void QuitSettingWindow()
+    {
+        settingWindow.SetActive(false);
     }
 }

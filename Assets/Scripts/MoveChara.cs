@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class MoveChara : MonoBehaviour
 {
     [SerializeField] Damages damages;
-    [SerializeField] Ennemy ennemy;
 
     [SerializeField] float transSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
@@ -32,7 +31,7 @@ public class MoveChara : MonoBehaviour
     [SerializeField] float animDashTime = 0.4f;
     [SerializeField] float dashingCooldown = 0.7f;
 
-    [SerializeField] bool isAttacking;
+    [SerializeField] public bool isAttacking;
     [SerializeField] public bool isEnnemyTouch;
     [SerializeField] bool isCombo;
     [SerializeField] bool canAttack = true;
@@ -141,11 +140,6 @@ public class MoveChara : MonoBehaviour
             playerAnimator.SetBool("BoolAttack", false);
         }
 
-        if (isAttacking && isEnnemyTouch)
-        {
-            ennemy.PV -= 1;
-        }
-
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && canJump)
         {
             StartCoroutine(Dash());
@@ -157,15 +151,6 @@ public class MoveChara : MonoBehaviour
         }
 
 
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (isAttacking && collision.transform.CompareTag("Ennemy"))
-        {
-            StartCoroutine(ennemy.FeedbackCollision());
-            ennemy.PV -= 1;
-        }
     }
 
     void Jump()

@@ -6,7 +6,12 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     public GameObject menuUI;
+    public GameObject player;
+    public GameObject canvas;
+    public GameObject fade;
     public static MenuManager instance;
+    public Animator fadeAnimator;
+    public GameObject settingWindow;
 
     public void Awake()
     {
@@ -34,14 +39,29 @@ public class MenuManager : MonoBehaviour
         menuUI.SetActive(false);
     }
 
-    public void OptionsButton() 
+    public void SettingsButton() 
     {
+        settingWindow.SetActive(true);
+    }
 
+    public void QuitSettingWindow()
+    {
+        settingWindow.SetActive(false);
     }
 
     public void MainMenuButton()
     {
-        menuUI.SetActive(false);
-        SceneManager.LoadScene("SCN_TUTO");
+        StartCoroutine(LoadMainMenu());
+    }
+
+    public IEnumerator LoadMainMenu()
+    {
+        fade.SetActive(true);
+        fadeAnimator.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(1f);
+        DontDestroyOnLoadScene.instance.RemoveFromDontDestroy();
+        SceneManager.LoadScene("MAIN_MENU");
+        yield return new WaitForSeconds(1f);
+        fade.SetActive(false);
     }
 }

@@ -36,6 +36,7 @@ Transform:
   m_Children:
   - {fileID: 135823969189949614}
   - {fileID: 3659262780602951035}
+  - {fileID: 837893006522936872}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5486082863518170303
@@ -202,6 +203,7 @@ MonoBehaviour:
   rb: {fileID: 9061143650462614376}
   wait: 2
   isWaiting: 0
+  animDeathime: 0
   speedRun: 2
   speed: 0
   waypoint:
@@ -210,7 +212,99 @@ MonoBehaviour:
   damageOnCollision: 1
   spriteEnnemy: {fileID: 5486082863518170303}
   destPoint: 0
+--- !u!1 &6630053273061055551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 837893006522936872}
+  - component: {fileID: 5524835920843496689}
+  - component: {fileID: 380268830935234258}
+  m_Layer: 0
+  m_Name: EnnemyHitbox
+  m_TagString: LCol
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &837893006522936872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630053273061055551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.027329, y: 0.000000014901, z: 0}
+  m_LocalScale: {x: 1.20125, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 380343264806392580}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &5524835920843496689
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630053273061055551}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.1357984, y: -0.38007775}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.5, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.83330953, y: 0.72537285}
+  m_EdgeRadius: 0
+--- !u!114 &380268830935234258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630053273061055551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6047707c7ede6964da2813b4ea727d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   PV: 1
+  MC: {fileID: 0}
+  ennemy: {fileID: 7601423919743510403}
   objectToDestroy: {fileID: 5775710657516129116}
 --- !u!1 &7961252685990215324
 GameObject:

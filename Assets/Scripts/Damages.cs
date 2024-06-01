@@ -159,6 +159,7 @@ public class Damages : MonoBehaviour
         tpEnnemy = true;
         isDead = false;
         playerAnimator.SetTrigger("Respawn");
+        yield return new WaitForSeconds(1f);
         RePlayMove();
         canBeDamage = true;
         PV = 4;
