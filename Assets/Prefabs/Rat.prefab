@@ -304,7 +304,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PV: 1
   MC: {fileID: 0}
+  damages: {fileID: 0}
   ennemy: {fileID: 7601423919743510403}
+  rb: {fileID: 9061143650462614376}
+  wait: 3
   objectToDestroy: {fileID: 5775710657516129116}
 --- !u!1 &7961252685990215324
 GameObject:

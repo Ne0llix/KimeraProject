@@ -80,7 +80,6 @@ public class Damages : MonoBehaviour
         canBeDamage = false;
         isDamage = true;
         tm = Time.time;
-        float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
         playerAnimator.SetTrigger("TriggerDamage");
         damageAnimator.SetInteger("IntDamage", dam);
@@ -110,14 +109,14 @@ public class Damages : MonoBehaviour
         }
             if (PV <= 0)
         {
-            rb.gravityScale = originalGravity;
+            rb.gravityScale = 1;
             StartCoroutine(Death());
             MenuManager.instance.EndMenu();
         }
         else if (PV > 0)
         {
             yield return new WaitForSeconds(animDamageTime);
-            rb.gravityScale = originalGravity;
+            rb.gravityScale = 1;
             isDamage = false;
             RePlayMove();
             yield return new WaitForSeconds(damageCooldown);

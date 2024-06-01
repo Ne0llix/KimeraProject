@@ -13,8 +13,7 @@ public class Ennemy : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] public float wait;
     [SerializeField] public bool isWaiting;
-
-    [SerializeField] public float animDeathime;
+    [SerializeField] public bool flyingEnnemy;
 
     public float speedRun;
     public float speed = 0;
@@ -80,6 +79,7 @@ public class Ennemy : MonoBehaviour
             {
                 speed = 0;
                 spriteEnnemy.flipX = false;
+                spriteEnnemy.flipY = false;
                 EnnemyAnimator.SetBool("BoolRun", false);
             }
         }
@@ -102,6 +102,10 @@ private void OnCollisionEnter2D(Collision2D collision){
             speed = 0;
             rb.velocity = Vector2.right * speedRun*2;
             yield return new WaitForSeconds(wait);
+            if (flyingEnnemy == true)
+            {
+                rb.velocity = Vector2.zero;
+            }
             speed = speedRun;
         }
         else if (spriteEnnemy.flipX == true)
@@ -109,6 +113,10 @@ private void OnCollisionEnter2D(Collision2D collision){
             speed = 0;
             rb.velocity = Vector2.left * speedRun*2;
             yield return new WaitForSeconds(wait);
+            if (flyingEnnemy == true)
+            {
+                rb.velocity = Vector2.zero;
+            }
             speed = speedRun;
         }
     }
