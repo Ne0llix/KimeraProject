@@ -11,7 +11,6 @@ public class ChangeLevel : MonoBehaviour
     [SerializeField] Damages damages;
     [SerializeField] SpriteRenderer spriteRenderer;
 
-    // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -24,9 +23,9 @@ public class ChangeLevel : MonoBehaviour
     {
         damages.StopMoving();
         damages.canBeDamage = false;
+        playerAnimator.SetBool("BoolRun", false);
         fadeAnimator.SetTrigger("FadeIn");
         yield return new WaitForSeconds(1f);
-        playerAnimator.SetBool("BoolRun", false);
         playerAnimator.SetTrigger("Respawn");
         if (spriteRenderer.flipX == false)
         {

@@ -83,7 +83,7 @@ public class MoveChara : MonoBehaviour
             return;
         }
 
-        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))) //Here, we ask if the Right Arrow key is push, if it is true, then, the cube go up on X axis for 0.05 per frame
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) //Here, we ask if the Right Arrow key is push, if it is true, then, the cube go up on X axis for 0.05 per frame
         {
             transform.Translate(transSpeed * Time.deltaTime, 0, 0);
             playerAnimator.SetBool("BoolRun", true);
@@ -93,7 +93,7 @@ public class MoveChara : MonoBehaviour
         {
             playerAnimator.SetBool("BoolRun", false);
         }
-        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))) //Here, we ask if the Left Arrow key is push, if it is true, then, the cube go down on X axis for 0.05 per frame
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) //Here, we ask if the Left Arrow key is push, if it is true, then, the cube go down on X axis for 0.05 per frame
         {
             transform.Translate(-transSpeed * Time.deltaTime, 0, 0);
             playerAnimator.SetBool("BoolRun", true);
