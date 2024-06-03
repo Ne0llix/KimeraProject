@@ -9,6 +9,7 @@ TagManager:
   - FadeSystem
   - LCol
   - Hitbox
+  - PlayerLvlSpawn
   layers:
   - Default
   - TransparentFX

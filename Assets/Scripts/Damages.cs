@@ -16,11 +16,9 @@ public class Damages : MonoBehaviour
     [SerializeField] public bool isDead = false;
     [SerializeField] private Rigidbody2D rb;
 
-    [SerializeField] FallingZone FZ;
-
-    [SerializeField] int PV;
-    [SerializeField] int dam = 0;
-    [SerializeField] bool canBeDamage = true;
+    [SerializeField] public int PV;
+    [SerializeField] public int dam = 0;
+    [SerializeField] public bool canBeDamage = true;
     [SerializeField] public bool isDamage;
     [SerializeField] float animDamageTime = 0.4f;
     [SerializeField] float damageCooldown = 0.7f;
@@ -28,6 +26,8 @@ public class Damages : MonoBehaviour
     [SerializeField] float animDeathTime = 1.2f;
 
     [SerializeField] float tm;
+
+    [SerializeField] public Transform playerLvlSpawn;
 
     [SerializeField] public bool noMove;
 
@@ -158,14 +158,14 @@ public class Damages : MonoBehaviour
         tpEnnemy = true;
         isDead = false;
         playerAnimator.SetTrigger("Respawn");
-        yield return new WaitForSeconds(1f);
-        RePlayMove();
-        canBeDamage = true;
-        PV = 4;
+        transform.position = playerLvlSpawn.position;
         if (spriteRenderer.flipX == false)
         {
             spriteRenderer.flipX = true;
         }
-        transform.position = FZ.playerSpawn.position;
+        yield return new WaitForSeconds(1f);
+        RePlayMove();
+        canBeDamage = true;
+        PV = 4;
     }
 }

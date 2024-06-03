@@ -36,9 +36,9 @@ public class MoveChara : MonoBehaviour
     [SerializeField] bool isCombo;
     [SerializeField] bool canAttack = true;
     [SerializeField] float attackSpeed = 7f;
-    [SerializeField] float attack1Time = 0.7f;
+    [SerializeField] float attack1Time = 0.5f;
     [SerializeField] float attack2Time = 0.3f;
-    [SerializeField] float animAttackTime = 0.1f;
+    [SerializeField] float animAttackTime = 0.2f;
     [SerializeField] float animJumpAttackTime = 0.3f;
     [SerializeField] float attackCooldown = 0.1f;
 
@@ -115,7 +115,6 @@ public class MoveChara : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q) && damages.noMove == false && canAttack && isJumping == false && !isAttacking)
         {
-            isAttacking = true;
             playerAnimator.SetBool("BoolAttack", true);
             playerAnimator.SetTrigger("TriggerAttack");
             StartCoroutine(Attack1());
@@ -133,7 +132,6 @@ public class MoveChara : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Q) && damages.noMove == false && canAttack && canJump == false)
         {
-            isAttacking = true;
             playerAnimator.SetBool("BoolAttack", true);
             playerAnimator.SetTrigger("TriggerAttack");
             StartCoroutine(JumpAttack());
@@ -210,6 +208,7 @@ public class MoveChara : MonoBehaviour
         canAttack = false;
         tm = Time.time;
         yield return new WaitForSeconds(animAttackTime);
+        isAttacking = true;
         rb.gravityScale = 0f;
         if (spriteRenderer.flipX == true)
         {
@@ -229,6 +228,7 @@ public class MoveChara : MonoBehaviour
 
     IEnumerator Attack2()
     {
+        isAttacking = true;
         isEnnemyTouch = false;
         playerAnimator.SetBool("BoolRun", false);
         canAttack = false;
@@ -245,6 +245,7 @@ public class MoveChara : MonoBehaviour
 
     IEnumerator Attack3()
     {
+        isAttacking = true;
         isEnnemyTouch = false;
         playerAnimator.SetBool("BoolRun", false);
         canAttack = false;
@@ -261,16 +262,16 @@ public class MoveChara : MonoBehaviour
 
     IEnumerator JumpAttack()
     {
+        isAttacking = true;
         playerAnimator.SetBool("BoolRun", false);
         canAttack = false;
         tm = Time.time;
-        yield return new WaitForSeconds(animJumpAttackTime);
         rb.gravityScale = 0f;
-        yield return new WaitForSeconds(attack2Time);
+        yield return new WaitForSeconds(animJumpAttackTime);
         rb.gravityScale = 1f;
         rb.velocity = new Vector2(transform.localScale.x * 0, 0f);
-        yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
+        yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
     }
 }

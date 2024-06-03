@@ -4,22 +4,37 @@ using UnityEngine.SceneManagement;
 
 public class ChangeLevel : MonoBehaviour
 {
-    public string sceneName;
+    [SerializeField] public Transform playerLvlSpawn;
     public Animator fadeAnimator;
+    public Animator playerAnimator;
+    public Animator damageAnimator;
+    [SerializeField] Damages damages;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            StartCoroutine(loadNextScene());
+            StartCoroutine(replacePlayer(collision));
         }
     }
 
-    public IEnumerator loadNextScene()
+    private IEnumerator replacePlayer(Collider2D collision)
     {
+        damages.StopMoving();
+        damages.canBeDamage = false;
         fadeAnimator.SetTrigger("FadeIn");
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(sceneName);
+        playerAnimator.SetBool("BoolRun", false);
+        playerAnimator.SetTrigger("Respawn");
+        if (spriteRenderer.flipX == false)
+        {
+            spriteRenderer.flipX = true;
+        }
+        collision.transform.position = playerLvlSpawn.position;
+        yield return new WaitForSeconds(1f);
+        damages.RePlayMove();
+        damages.canBeDamage = true;
     }
 }
